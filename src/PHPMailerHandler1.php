@@ -75,8 +75,11 @@ class PHPMailerHandler1 extends MailHandler
     // @codingStandardsIgnoreStart
     if ($records) {
       $subjectFormatter = new LineFormatter($mailer->Subject);
-      // $mailer->Subject = $subjectFormatter->format($this->getHighestRecord($records));
-      $mailer->Subject = "Test from Github";
+      $subject          = $subjectFormatter->format($this->getHighestRecord($records));
+      if (mb_strlen($subject) > 80) {
+        $subject = mb_substr($subject, 0, 80) . " ..";
+      }
+      $mailer->Subject = $subject;
     }
     // @codingStandardsIgnoreEnd
 
